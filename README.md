@@ -152,3 +152,6 @@ Every feature update must also update:
 
 Use the fixed `DOC_SYNC_RECORD` template in `AGENTS.md` section:
 - `11. Document Sync Template (Required)`
+
+![image](https://github.com/released/JoyStickTestTool/blob/main/JoyStickTestTool.jpg) 
+
