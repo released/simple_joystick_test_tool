@@ -6,6 +6,13 @@ If old notes or old frozen specs conflict with this file, this file wins.
 
 ---
 
+## Workspace Layout
+
+- Follow workspace `#READ_ME_FIRST#/PROJECT_LAYOUT.md`.
+- Documentation screenshots live under `docs/images`; use relative README links.
+- Canonical batch aliases: `scripts/build_release_mfc.bat` and `scripts/clean_mfc.bat`.
+- Existing build/clean entry points remain compatible; only known compiler intermediates are disposable, never EXE/INI/DLL/data/log/evidence/unknown files.
+
 ## 1. Scope
 
 `JoyStickTestTool` is now an **RX-focused HID joystick monitor**.

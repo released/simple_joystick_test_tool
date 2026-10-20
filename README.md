@@ -153,5 +153,10 @@ Every feature update must also update:
 Use the fixed `DOC_SYNC_RECORD` template in `AGENTS.md` section:
 - `11. Document Sync Template (Required)`
 
-![image](https://github.com/released/JoyStickTestTool/blob/main/JoyStickTestTool.jpg) 
+![image](docs/images/JoyStickTestTool.jpg)
+
+Workspace layout: application code/resources in `src`, automation in `scripts`,
+screenshots in `docs/images`, local executable/settings in `build`.
+Canonical aliases are `scripts/build_release_mfc.bat` and `scripts/clean_mfc.bat`;
+older entries remain compatible. Clean preserves EXE/INI/DLL/data/log/evidence.
 
