@@ -1,4 +1,34 @@
 ﻿# AGENTS.md
+## DOC_SYNC_RECORD
+Date: 2026-10-20
+Feature: compiler-file-only clean and nested delivery preservation
+
+1) AGENTS.md
+- Added: file allowlist, complete reparse preflight and automatic agent verification.
+- Changed: normal clean no longer purges output folders by name.
+- Removed: none.
+
+2) README.md
+- Added: canonical/legacy clean behavior and nested delivery preservation.
+- Changed: no application behavior.
+- Removed: none.
+
+3) SELF_CHECK.md
+- Added test cases: help/no-deletion, 17 delivery sentinels plus source, object removal, idempotence, junction rejection and actual protected-file hashes.
+- Changed test cases: clean verifies file deletion rather than folder disappearance.
+- Removed test cases: none.
+
+Verification
+- Build: earlier Release x64 PASS; application source unchanged, no clean-only rebuild.
+- Runtime smoke test: NOT RUN for this clean-only follow-up.
+- Actual clean and expanded preservation fixtures: PASS.
+
+## Compiler-File Clean Safety
+
+- Both canonical/legacy clean entries use standalone `scripts/clean_intermediates.ps1`.
+- Preflight all paths/reparse points before deleting allowlisted files only; never recursively purge obj/tests/verify or infer unknown content is disposable.
+- Preserve EXE/INI/DLL/data/log/evidence/unknowns at every nesting level. Codex runs actual clean plus nested-delivery/help/idempotence/junction tests automatically.
+
 ## JoyStickTestTool Current Specification (as of 2026-02-15)
 
 This document is the active implementation spec for `JoyStickTestTool`.

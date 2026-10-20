@@ -7,6 +7,39 @@ If FAIL, write the reason.
 Document sync policy:
 - Every feature change must update AGENTS.md, README.md, and this file.
 - Use DOC_SYNC_RECORD template defined in AGENTS.md section 11. Document Sync Template (Required).
+## DOC_SYNC_RECORD
+Date: 2026-10-20
+Feature: compiler-file-only clean and nested delivery preservation
+
+1) AGENTS.md
+- Added: file allowlist, complete reparse preflight and automatic agent verification.
+- Changed: normal clean no longer purges output folders by name.
+- Removed: none.
+
+2) README.md
+- Added: canonical/legacy clean behavior and nested delivery preservation.
+- Changed: no application behavior.
+- Removed: none.
+
+3) SELF_CHECK.md
+- Added test cases: help/no-deletion, 17 delivery sentinels plus source, object removal, idempotence, junction rejection and actual protected-file hashes.
+- Changed test cases: clean verifies file deletion rather than folder disappearance.
+- Removed test cases: none.
+
+Verification
+- Build: earlier Release x64 PASS; application source unchanged, no clean-only rebuild.
+- Runtime smoke test: NOT RUN for this clean-only follow-up.
+- Actual clean and expanded preservation fixtures: PASS.
+
+## Clean Safety Follow-up 2026-10-20
+
+- Replaced named-directory purges with a standalone compiler-file allowlist; canonical and legacy entries share the same helper and support non-destructive help.
+- PASS: shared verifier `-CleanBatch scripts/clean_mfc.bat -CleanActualProject -CheckNestedDelivery -CheckReparseRejection`: 17 fixture build sentinels plus source, help/no-deletion, object removal, repeat-clean and junction rejection before deletion.
+- PASS: 1 actual protected build files unchanged (SHA-256).
+- Application source/project resources are unchanged from verified baseline `8ed81cb644e718ca2a273d77e9ab410f7cbbd0ec`. The Release x64 build already passed earlier in this migration; it was not rebuilt or version-bumped just for this clean-only follow-up. This is not a new UI/hardware acceptance claim.
+- NOT RUN: new functional/device/full visual/DPI/Debug acceptance; no hardware writes or user-instance closure.
+- Final commit/publication evidence: workspace `#READ_ME_FIRST#/PROJECT_LAYOUT_MIGRATION.md`.
+
 ## Layout Audit 2026-10-20
 
 - Screenshot moved to `docs/images/JoyStickTestTool.jpg` with no overwrite and SHA-256 verification; README uses a relative link instead of an old repository URL.

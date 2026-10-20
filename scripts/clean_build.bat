@@ -1,23 +1,16 @@
 @echo off
 setlocal
-
-set "ROOT=%~dp0.."
-set "BUILD_DIR=%ROOT%\build"
-
-if not exist "%BUILD_DIR%" (
-  echo Build directory not found: "%BUILD_DIR%"
-  exit /b 0
+if /I "%~1"=="/?" goto usage
+if /I "%~1"=="-h" goto usage
+if /I "%~1"=="--help" goto usage
+if not "%~1"=="" (
+  echo Unsupported clean argument.
+  exit /b 1
 )
+powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0clean_intermediates.ps1"
+exit /b %errorlevel%
 
-for %%D in (obj tests verify verify_obj) do (
-  if exist "%BUILD_DIR%\%%D" rmdir /s /q "%BUILD_DIR%\%%D"
-)
-for %%E in (obj pch idb pdb ilk res exp lib iobj ipdb tlog lastbuildstate) do (
-  del /s /f /q "%BUILD_DIR%\*.%%E" >nul 2>nul
-)
-
-echo Clean complete. Removed compiler intermediates only.
-echo Preserved executables, INI files, DLLs, data, logs, and other delivery files.
-
-endlocal
+:usage
+echo Usage: %~nx0
+echo Removes allowlisted compiler files; preserves delivery/runtime/unknown files.
 exit /b 0
