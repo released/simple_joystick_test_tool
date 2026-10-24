@@ -1,12 +1,64 @@
 ﻿JoyStickTestTool Self-Check Checklist (CURRENT)
 
 This checklist is for the current RX-focused JoyStickTestTool.
-Use PASS / FAIL for every case.
-If FAIL, write the reason.
+Select cases by change impact; do not repeat unrelated full suites by default.
+Report actual PASS / FAIL / NOT RUN and reasons, including reused unchanged evidence.
 
 Document sync policy:
 - Every feature change must update AGENTS.md, README.md, and this file.
 - Use DOC_SYNC_RECORD template defined in AGENTS.md section 11. Document Sync Template (Required).
+## Verified x64 EXE slimming 2026-10-25
+
+- PASS comparable Release baseline 2816512 bytes (original 2816512),
+  formal 745984; SHA 8556E7635796FCCE52EEAD8C40EF76D088D26C04402CA2AEE5FF9D99AD6FDB47.
+- PASS scripts/build.ps1 -Configuration Release -Platform x64 -NoRun; isolated Debug with version prebuild disabled.
+  No compiler/linker warnings/errors reported.
+- PASS hash-matched fresh own-process fixtures: identical child-control class counts,
+  Debug without assertion and normal exit 0. No real INIs,
+  Connect, report writes, flash or clipboard actions. Passive Windows device discovery
+  may occur as in normal disconnected startup; it is not a hardware I/O validation.
+- Original five-pair timing failure is retained in the JSON evidence. One fixed
+  15-pair confirmation used the unchanged predeclared calibration formula and passed.
+- PASS existing static runtime, compiler optimization/security, x64 PE 0x8160;
+  unused VisualManager RTTI absent. No app/SDK/protocol/firmware source changes.
+- PASS scoped timing: two warmups, baseline calibration before Release candidate,
+  15 alternating AB/BA pairs without concurrent compilation. Delta max(floor,
+  10% baseline median, 3*MAD); memory 5%; floors startup25/UI2/CPU16ms, memory1MiB.
+  - StartupMs: 1411.9969 -> 1441.6994; limit 1710.9969.
+  - PeakBytes: 20656128.0000 -> 20197376.0000; limit 21704704.0000.
+  - CpuMs: 890.6250 -> 875.0000; limit 1031.6250.
+  - WorkflowMs: 1.2224 -> 1.2098; limit 3.2224.
+- Raw numeric samples/limits/original failed timing: docs/verification/exe-slimming-20261025.json.
+- PASS actual clean_mfc.bat: 28 compiler files removed, 1 protected actual files
+  SHA unchanged; 17 nested fixture files/source, help/idempotence PASS. Earlier
+  unchanged junction/firmware/core evidence reused; private root INI hashes preserved.
+- NOT RUN: physical-device/protocol throughput, unrelated firmware, visual/DPI,
+  clean-PC, Win32. This scoped MFC change does not require a full hardware suite.
+
+## DOC_SYNC_RECORD
+Date: 2026-10-25
+Feature: unused x64 MFC control-registration size reduction
+
+1) AGENTS.md
+- Added: reviewed x64-only registration exclusion and scoped verification contract.
+- Changed: no application/firmware behavior.
+- Removed: none.
+
+2) README.md
+- Added: before/after EXE size and verification limitations.
+- Changed: no deployment prerequisites.
+- Removed: none.
+
+3) SELF_CHECK.md
+- Added test cases: paired startup/controls/Debug/close and actual clean preservation.
+- Changed test cases: select by change impact; preserve original failed timings.
+- Removed test cases: none.
+
+Verification
+- Build: scripts/build.ps1 -Configuration Release -Platform x64 -NoRun (PASS); isolated Debug build PASS.
+- Runtime smoke test: owned startup/control/normal-close (PASS); hardware/visual NOT RUN.
+
+
 ## DOC_SYNC_RECORD
 Date: 2026-10-20
 Feature: compiler-file-only clean and nested delivery preservation

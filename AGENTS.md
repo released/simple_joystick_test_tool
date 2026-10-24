@@ -1,4 +1,38 @@
 ﻿# AGENTS.md
+## Verified x64 size configuration (2026-10-25)
+
+- Only x64 defines _AFX_NO_MFC_CONTROLS_IN_DIALOGS after standard/common/custom
+  control review. Reassess before introducing CMFC controls; keep Win32 unchanged.
+- Keep existing Release optimization, /GL, static /MT, /GS and PE security;
+  never trade device/protocol features or installation requirements for fewer bytes.
+- Validate hash-matched isolated Release/Debug startup/control/modal/close paths,
+  scoped paired performance and actual clean; use no personal INI/device commands.
+- Actual results/raw timing: SELF_CHECK.md and docs/verification/exe-slimming-20261025.json.
+
+## DOC_SYNC_RECORD
+Date: 2026-10-25
+Feature: unused x64 MFC control-registration size reduction
+
+1) AGENTS.md
+- Added: reviewed x64-only registration exclusion and scoped verification contract.
+- Changed: no application/firmware behavior.
+- Removed: none.
+
+2) README.md
+- Added: before/after EXE size and verification limitations.
+- Changed: no deployment prerequisites.
+- Removed: none.
+
+3) SELF_CHECK.md
+- Added test cases: paired startup/controls/Debug/close and actual clean preservation.
+- Changed test cases: select by change impact; preserve original failed timings.
+- Removed test cases: none.
+
+Verification
+- Build: scripts/build.ps1 -Configuration Release -Platform x64 -NoRun (PASS); isolated Debug build PASS.
+- Runtime smoke test: owned startup/control/normal-close (PASS); hardware/visual NOT RUN.
+
+
 ## DOC_SYNC_RECORD
 Date: 2026-10-20
 Feature: compiler-file-only clean and nested delivery preservation

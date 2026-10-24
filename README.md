@@ -2,6 +2,39 @@
 
 Windows MFC tool for validating USB HID joystick/gamepad input reports.
 
+## Release EXE size reduction (2026-10-25)
+
+Release x64 EXE: 2,816,512 -> 745,984 bytes.
+Unused MFC control registration is excluded; static runtime, security, actual
+controls and protocol/firmware features remain.
+Isolated startup, controls, Debug normal-close and 15 paired performance samples
+passed. See SELF_CHECK.md for scope, original timing failures and actual clean
+preservation. Physical-device, visual/DPI and clean-PC acceptance are not claimed.
+
+## DOC_SYNC_RECORD
+Date: 2026-10-25
+Feature: unused x64 MFC control-registration size reduction
+
+1) AGENTS.md
+- Added: reviewed x64-only registration exclusion and scoped verification contract.
+- Changed: no application/firmware behavior.
+- Removed: none.
+
+2) README.md
+- Added: before/after EXE size and verification limitations.
+- Changed: no deployment prerequisites.
+- Removed: none.
+
+3) SELF_CHECK.md
+- Added test cases: paired startup/controls/Debug/close and actual clean preservation.
+- Changed test cases: select by change impact; preserve original failed timings.
+- Removed test cases: none.
+
+Verification
+- Build: scripts/build.ps1 -Configuration Release -Platform x64 -NoRun (PASS); isolated Debug build PASS.
+- Runtime smoke test: owned startup/control/normal-close (PASS); hardware/visual NOT RUN.
+
+
 ## DOC_SYNC_RECORD
 Date: 2026-10-20
 Feature: compiler-file-only clean and nested delivery preservation
