@@ -396,12 +396,14 @@ Use `SELF_CHECK.md` as current acceptance checklist.
 
 ## 11. Document Sync Template (Required)
 
-For every feature change, update all three files in the same commit:
+For a feature change, keep the affected specifications and user instructions accurate:
 - `AGENTS.md` (developer spec)
 - `README.md` (user manual)
 - `SELF_CHECK.md` (verification checklist)
 
-Use this fixed template block:
+README contains current product usage only, never DOC_SYNC_RECORD blocks,
+development conversations, completed-task lists or test/build results.
+Record this engineering template in HANDOFF.md or SELF_CHECK.md only:
 
 ```md
 ## DOC_SYNC_RECORD
@@ -429,7 +431,9 @@ Verification
 ```
 
 Minimum rule:
-- If a behavior/UI/build flow changed but one of the three docs has no update, the task is incomplete.
+- Update the documents actually affected by the behavior/UI/build change.
+  Documentation-only wording review does not require all three files to change,
+  an app rebuild or a full functional test replay.
 
 ## DOC_SYNC_RECORD
 Date: 2026-02-17

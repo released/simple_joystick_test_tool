@@ -2,75 +2,12 @@
 
 Windows MFC tool for validating USB HID joystick/gamepad input reports.
 
-## Release EXE size reduction (2026-10-25)
-
-Release x64 EXE: 2,816,512 -> 745,984 bytes.
-Unused MFC control registration is excluded; static runtime, security, actual
-controls and protocol/firmware features remain.
-Isolated startup, controls, Debug normal-close and 15 paired performance samples
-passed. See SELF_CHECK.md for scope, original timing failures and actual clean
-preservation. Physical-device, visual/DPI and clean-PC acceptance are not claimed.
-
-## DOC_SYNC_RECORD
-Date: 2026-10-25
-Feature: unused x64 MFC control-registration size reduction
-
-1) AGENTS.md
-- Added: reviewed x64-only registration exclusion and scoped verification contract.
-- Changed: no application/firmware behavior.
-- Removed: none.
-
-2) README.md
-- Added: before/after EXE size and verification limitations.
-- Changed: no deployment prerequisites.
-- Removed: none.
-
-3) SELF_CHECK.md
-- Added test cases: paired startup/controls/Debug/close and actual clean preservation.
-- Changed test cases: select by change impact; preserve original failed timings.
-- Removed test cases: none.
-
-Verification
-- Build: scripts/build.ps1 -Configuration Release -Platform x64 -NoRun (PASS); isolated Debug build PASS.
-- Runtime smoke test: owned startup/control/normal-close (PASS); hardware/visual NOT RUN.
-
-
-## DOC_SYNC_RECORD
-Date: 2026-10-20
-Feature: compiler-file-only clean and nested delivery preservation
-
-1) AGENTS.md
-- Added: file allowlist, complete reparse preflight and automatic agent verification.
-- Changed: normal clean no longer purges output folders by name.
-- Removed: none.
-
-2) README.md
-- Added: canonical/legacy clean behavior and nested delivery preservation.
-- Changed: no application behavior.
-- Removed: none.
-
-3) SELF_CHECK.md
-- Added test cases: help/no-deletion, 17 delivery sentinels plus source, object removal, idempotence, junction rejection and actual protected-file hashes.
-- Changed test cases: clean verifies file deletion rather than folder disappearance.
-- Removed test cases: none.
-
-Verification
-- Build: earlier Release x64 PASS; application source unchanged, no clean-only rebuild.
-- Runtime smoke test: NOT RUN for this clean-only follow-up.
-- Actual clean and expanded preservation fixtures: PASS.
-
-## Compiler-Only Clean
-
-`scripts/clean_mfc.bat` and the existing clean entry remove known compiler files
-only. Complete path/link preflight rejects reparse points before deletion;
-EXE/INI/DLL/data/log/evidence/unknowns are preserved even under obj/tests/verify.
-No additional manual setup is required.
 
 ## Current Scope
 
 This project is **RX-focused**.
 
-Implemented:
+Features:
 - HID scan and device selection
 - Connect/Disconnect
 - Continuous input report capture
@@ -149,20 +86,20 @@ Note:
   - Log/Clear controls
   - RX grid
 - each RX row has a `Copy` button at the row end
-- DeviceBar connection-status dot/text now uses deduplicated updates + partial redraw to reduce flicker while joystick data is active.
+- DeviceBar connection-status dot/text uses deduplicated updates and partial redraw during live input.
 
 Visualizer notes:
-- Left visualizer now has a title row (`Joystick Visualizer`) to match right-side panel style.
+- Left visualizer has a title row (`Joystick Visualizer`).
 - Left and right visualizer panels are split by center line (about 50/50 width each) in normal window size.
 - Left side keeps existing `X/Y`, `Z/Rz`, `POV`, `Buttons` sections.
-- Left-side 4 sections are now equal-width distributed to reduce unused blank area.
-- `Z/Rz` vertical bars now have wider gap and show each value text above the bar, centered to that bar.
+- Left-side four sections use equal-width distribution.
+- `Z/Rz` vertical bars show each value above its bar, centered to that bar.
 - `Z/Rz` bar height is reduced so bars and labels stay fully inside the left titled panel.
 - Right side shows `Gamepad Mapping` icon panel as the right half panel (very narrow width may fallback).
 - Right-side `Gamepad Mapping` panel includes a checkbox `Swap DPad <-> L3`.
 - Default checkbox state is checked: `X/Y -> UDLR`, `POV -> L3`.
 - Unchecked state restores original mapping: `POV -> UDLR`, `X/Y -> L3`.
-- Right panel no longer depends on `example.png`.
+- Right panel uses vector icons without an external image file.
 - RX visualizer repaints with double-buffering to reduce flicker during live input.
 - Right icon panel uses larger stick rings/movement range for clearer analog travel.
 - `SELECT` / `START` icon boxes are enlarged to keep labels readable.
@@ -193,7 +130,7 @@ Line format:
 Main config file:
 - `JoyStickTestTool.ini`
 
-Actively used now:
+Saved settings:
 - last selected device (`Path`, `VID`, `PID`, `PathHash`)
 - `LogEnabled`
 - `TimestampEnabled`
@@ -207,20 +144,9 @@ Note:
 - Width allocation prioritizes the rightmost `JOY` pane.
 - If width is constrained, left panes are compressed first so `JOY:` trailing text is less likely to be clipped.
 
-## Maintenance: Document Sync Template
-
-Every feature update must also update:
-- `AGENTS.md`
-- `README.md`
-- `SELF_CHECK.md`
-
-Use the fixed `DOC_SYNC_RECORD` template in `AGENTS.md` section:
-- `11. Document Sync Template (Required)`
 
 ![image](docs/images/JoyStickTestTool.jpg)
 
-Workspace layout: application code/resources in `src`, automation in `scripts`,
-screenshots in `docs/images`, local executable/settings in `build`.
-Canonical aliases are `scripts/build_release_mfc.bat` and `scripts/clean_mfc.bat`;
-older entries remain compatible. Clean preserves EXE/INI/DLL/data/log/evidence.
+For compiler cleanup, run `scripts/clean_mfc.bat`. EXE/INI/DLL files, data and logs
+are retained.
 
