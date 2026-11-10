@@ -23,3 +23,13 @@ build/CMakeFiles/
 build/x64/
 build/*.exp
 build/*.lib
+
+# Prepared build metadata and private engineering records.
+/src/tool_build_identity.h
+/docs/internal/
+/AGENTS.md
+/HANDOFF.md
+/SELF_CHECK.md
+/MANUAL_CLEANUP.md
+/github_push.local.psd1
+/build/Debug/

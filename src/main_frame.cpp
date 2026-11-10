@@ -1,4 +1,5 @@
 #include "main_frame.h"
+#include "tool_build_identity.h"
 
 #include "resource.h"
 
@@ -50,6 +51,8 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct) {
     if (CFrameWnd::OnCreate(lpCreateStruct) == -1) {
         return -1;
     }
+    if (!build_identity_.Create(m_hWnd, TOOL_BUILD_VERSION_W, TOOL_BUILD_DISPLAY_TIME_W,
+                                TOOL_BUILD_TIMESTAMP_ISO_W)) return -1;
 
     if (!m_deviceBar.Create(this)) {
         return -1;
@@ -107,6 +110,9 @@ void CMainFrame::LayoutControls(int cx, int cy) {
     }
 
     const int margin = 8;
+    build_identity_.SetFont(reinterpret_cast<HFONT>(::SendMessageW(::GetWindow(m_deviceBar.GetSafeHwnd(), GW_CHILD), WM_GETFONT, 0, 0)));
+    build_identity_.Place(cx - margin, margin, (std::max)(0, cx - margin * 2));
+    const int header_height = build_identity_.Height() + margin;
     const int gap = 8;
     const int top_height = 170;
     const int status_height = 22;
@@ -119,7 +125,7 @@ void CMainFrame::LayoutControls(int cx, int cy) {
     m_statusBar.MoveWindow(0, cy - status_height, cx, status_height);
     LayoutStatusBarPanes();
 
-    int y = margin;
+    int y = margin + header_height;
     m_deviceBar.MoveWindow(margin, y, width, top_height);
     y += top_height + gap;
 

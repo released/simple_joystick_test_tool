@@ -180,6 +180,8 @@
   <ItemDefinitionGroup Condition="'$(Platform)'=='x64'">
     <ClCompile><PreprocessorDefinitions>_AFX_NO_MFC_CONTROLS_IN_DIALOGS;%(PreprocessorDefinitions)</PreprocessorDefinitions></ClCompile>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup><PreBuildEvent><Command>powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$(ProjectDir)scripts\prepare_tool_build_identity.ps1" -VersionFile "$(ProjectDir)VERSION" -OutputHeader "$(ProjectDir)src\tool_build_identity.h"</Command></PreBuildEvent></ItemDefinitionGroup>
+  <ItemGroup><ClInclude Include="src\tool_build_display.h" /><ClInclude Include="src\tool_build_identity.h" /><None Include="scripts\prepare_tool_build_identity.ps1" /></ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
 </Project>

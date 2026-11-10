@@ -1,0 +1,14 @@
+{
+  "publication_enabled": true,
+  "repository": "released/simple_joystick_test_tool",
+  "visibility": "PUBLIC",
+  "branch": "main",
+  "readme_title": "JoyStickTestTool",
+  "identity_files": [
+    "README.md",
+    "JoyStickTestTool.vcxproj"
+  ],
+  "delivery_files": [
+    "build/JoyStickTestTool.exe"
+  ]
+}

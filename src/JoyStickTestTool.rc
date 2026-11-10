@@ -1,3 +1,29 @@
+#include <windows.h>
+#include "tool_build_identity.h"
 #include "resource.h"
 
 IDI_APP_ICON ICON "res\\hid.ico"
+
+1 VERSIONINFO
+ FILEVERSION TOOL_BUILD_VERSION_NUMERIC
+ PRODUCTVERSION TOOL_BUILD_VERSION_NUMERIC
+ FILEFLAGSMASK 0x3fL
+ FILEOS 0x40004L
+ FILETYPE 1
+BEGIN
+ BLOCK "StringFileInfo"
+ BEGIN
+  BLOCK "040904b0"
+  BEGIN
+   VALUE "FileDescription", "JoyStickTestTool\0"
+   VALUE "ProductName", "JoyStickTestTool\0"
+   VALUE "FileVersion", TOOL_BUILD_VERSION_TEXT "\0"
+   VALUE "ProductVersion", TOOL_BUILD_VERSION_TEXT "\0"
+   VALUE "BuildDateTime", TOOL_BUILD_TIMESTAMP_ISO "\0"
+  END
+ END
+ BLOCK "VarFileInfo"
+ BEGIN
+  VALUE "Translation", 0x409, 1200
+ END
+END
